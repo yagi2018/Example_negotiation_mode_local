@@ -1,0 +1,330 @@
+### [negotiation_alice.py]
+1. main()
+   - 功能描述: 主函数，负责初始化Alice节点并启动协议协商
+   - 输入参数: 无
+   - 输出参数: 无
+   - 调用函数:
+     - get_llm_instance()
+     - SimpleNegotiationNode()
+     - generate_did_info()
+     - load_bob_did()
+     - alice_node.run()
+     - alice_node.connect_to_did_with_negotiation()
+     - generate_code_for_protocol_requester_interface()
+     - requester_session.code_generated()
+     - call_requester_interface()
+     - alice_node.stop()
+2. get_llm_instance()
+   - 功能描述: 获取Azure OpenAI LLM实例
+   - 输入参数: 无
+   - 输出参数: AzureLLM实例
+   - 调用函数: 无
+3. SimpleNegotiationNode()
+   - 功能描述: 初始化SimpleNegotiationNode实例
+   - 输入参数: host_domain, llm, host_port, host_ws_path, protocol_code_path
+   - 输出参数: SimpleNegotiationNode实例
+   - 调用函数: 无
+4. generate_did_info()
+   - 功能描述: 生成或加载DID信息
+   - 输入参数: node, json_filename
+   - 输出参数: 无
+   - 调用函数: node.generate_did_document()
+5. load_bob_did()
+   - 功能描述: 从JSON文件加载Bob的DID
+   - 输入参数: 无
+   - 输出参数: Bob的DID字符串
+   - 调用函数: 无
+6. alice_node.run()
+  - 功能描述: 启动Alice节点
+   - 输入参数: 无
+   - 输出参数: 无
+   - 调用函数: 无
+7. alice_node.connect_to_did_with_negotiation()
+   - 功能描述: 连接到Bob并进行协议协商
+   - 输入参数: bob_did, requirement, input_description, output_description
+   - 输出参数: RequesterSession实例
+   - 调用函数: 无
+8. generate_code_for_protocol_requester_interface()
+   - 功能描述: 生成协议接口代码
+   - 输入参数: llm, interface_description, code_path
+   - 输出参数: 生成的代码字符串
+   - 调用函数: 无
+9. requester_session.code_generated()
+   - 功能描述: 通知远程端代码生成已完成，并等待远程端确认
+   - 输入参数: 无
+   - 输出参数: 布尔值，表示是否成功
+   - 调用函数: 无
+10. call_requester_interface()
+    - 功能描述: 调用协议接口发送请求
+    - 输入参数: requester_instance
+    - 输出参数: 响应数据
+    - 调用函数: 无
+11. alice_node.stop()
+    - 功能描述: 停止Alice节点
+    - 输入参数: 无
+    - 输出参数: 无
+    - 调用函数: 无
+	
+### [negotiation_bob.py]
+1. main()
+	- 功能描述 : 主函数，负责初始化Bob节点并启动协议协商
+	- 输入参数 : 无
+	- 输出参数 : 无
+	- 调用函数 :
+	  - get_llm_instance()
+	  - SimpleNegotiationNode()
+	  - generate_did_info()
+	  - bob_node.run()
+	  - bob_node.stop()
+2. get_llm_instance()
+	- 功能描述 : 获取OpenRouter LLM实例
+	- 输入参数 : 无
+	- 输出参数 : OpenRouterLLM实例
+	- 调用函数 : 无
+3. SimpleNegotiationNode()
+	- 功能描述 : 初始化SimpleNegotiationNode实例
+	- 输入参数 :
+	  - host_domain : 主机域名
+	  - llm : LLM实例
+	  - host_port : 主机端口
+	  - host_ws_path : WebSocket路径
+	  - protocol_code_path : 协议代码路径
+	  - new_provider_session_callback : 新提供者会话回调函数
+	  - get_capability_info_callback : 获取能力信息回调函数
+	- 输出参数 : SimpleNegotiationNode实例
+	- 调用函数 : 无
+4. generate_did_info()
+	- 功能描述 : 生成或加载DID信息
+	- 输入参数 :
+	  - node : SimpleNegotiationNode实例
+	  - json_filename : JSON文件名
+	- 输出参数 : 无
+	- 调用函数 :
+	  - node.generate_did_document()
+	  - node.set_did_info()
+5. bob_node.run()
+	- 功能描述 : 启动Bob节点
+	- 输入参数 : 无
+	- 输出参数 : 无
+	- 调用函数 : 无
+6. bob_node.stop()
+	- 功能描述 : 停止Bob节点
+	- 输入参数 : 无
+	- 输出参数 : 无
+	- 调用函数 : 无
+7. new_provider_negotiation_session_callback()
+	- 功能描述 : 处理新的提供者会话
+	- 输入参数 :
+	  - provider_session : ProviderSession实例
+	- 输出参数 : 无
+	- 调用函数 :
+	  - generate_code_for_protocol_provider_callback()
+	  - provider_instance.set_protocol_callback()
+	  - provider_session.code_generated()
+8. generate_code_for_protocol_provider_callback()
+	- 功能描述 : 生成协议回调处理代码
+	- 输入参数 :
+	  - llm : LLM实例
+	  - callback_description : 回调描述
+	  - code_path : 代码路径
+	- 输出参数 : 生成的代码
+	- 调用函数 : 无
+9. provider_instance.set_protocol_callback()
+	- 功能描述 : 设置协议回调函数
+	- 输入参数 :
+	  - protocol_callback_code : 协议回调代码
+	- 输出参数 : 无
+	- 调用函数 : 无
+10. provider_session.code_generated()
+	- 功能描述 : 通知远程端代码生成已完成，并等待远程端确认
+	- 输入参数 : 无
+	- 输出参数 : 布尔值，表示是否成功
+	- 调用函数 : 无
+	
+### [llm_output_processer.py]
+1.extract_code_from_llm_output(content: str) -> Optional[str]
+	- 功能描述: 从LLM输出内容中提取Python代码
+	- 输入参数: content - LLM输出的完整内容字符串
+	- 输出参数: 提取的Python代码字符串，如果提取失败则返回 None
+	- 调用函数:
+	  - re.findall() - 用于匹配代码块
+	  - logging.error() - 记录错误日志
+	  - traceback.format_exc() - 获取异常堆栈信息
+
+### [protocol_negotiator.py]
+1.ProtocolNegotiator. init ()
+	- 功能描述: 初始化协议协商器
+	- 输入参数:
+	  - llm: BaseLLM实例
+	  - get_capability_info_callback: 异步回调函数，用于检查提供者的能力
+	- 输出参数: 无
+	- 调用函数: 无
+2. ProtocolNegotiator.get_capability_info()
+	- 功能描述: 从外部回调函数获取能力信息
+	- 输入参数:
+	  - requirement: 协议需求的自然语言描述
+	  - input_description: 预期输入格式描述
+	  - output_description: 预期输出格式描述
+	- 输出参数: 能力信息字符串
+	- 调用函数:
+	  - get_capability_info_callback()
+3. ProtocolNegotiator.generate_initial_protocol()
+	- 功能描述: 生成初始协议提案
+	- 输入参数:
+	  - requirement: 协议需求
+	  - input_description: 输入描述
+	  - output_description: 输出描述
+	- 输出参数:
+	  - protocol: 生成的协议字符串
+	  - status: 协商状态
+	  - round: 当前协商轮次
+	- 调用函数:
+	  - llm.async_generate_response()
+4.ProtocolNegotiator.evaluate_protocol_proposal()
+	- 功能描述: 评估协议提案
+	- 输入参数:
+	  - negotiation_status: 当前协商状态
+	  - counterparty_round: 对方的轮次
+	  - candidate_protocols: 待评估的协议提案
+	  - modification_summary: 修改摘要
+	- 输出参数:
+	  - NegotiationResult: 更新后的状态和详细信息
+	  - int: 当前协商轮次
+	- 调用函数: 无
+5.NegotiationHistoryEntry. init ()
+	- 功能描述: 初始化协商历史条目
+	- 输入参数:
+	  - round: 协商轮次
+	  - candidate_protocols: 协议提案
+	  - modification_summary: 修改摘要
+	- 输出参数: 无
+	- 调用函数: 无
+
+### [meta_protocol.py]
+1.MetaProtocol. init ()
+	- 功能描述: 初始化MetaProtocol类实例
+	- 输入参数:
+	  - send_callback: 发送数据的回调函数
+	  - get_capability_info_callback: 获取能力信息的回调函数
+	  - llm: LLM实例
+	  - protocol_code_path: 生成代码的路径
+	- 输出参数: 无
+	- 调用函数: 无
+2. MetaProtocol.send_data()
+	- 功能描述: 使用回调函数发送数据
+	- 输入参数: data: 要发送的字节数据
+	- 输出参数: 无
+	- 调用函数:
+	  - self.send_callback()
+3.MetaProtocol.handle_meta_data()
+	- 功能描述: 处理接收到的元协议数据
+	- 输入参数: data: 接收到的字节数据
+	- 输出参数: 无
+	- 调用函数:
+	  - self._handle_protocol_negotiation()
+	  - self._handle_code_generation()
+	  - self._handle_test_cases_negotiation()
+	  - self._handle_fix_error_negotiation()
+	  - self._handle_natural_language_negotiation()
+4.MetaProtocol.negotiate_protocol()
+	- 功能描述: 协商协议并生成代码实现
+	- 输入参数:
+	  - requirement: 协议需求的自然语言描述
+	  - input_description: 预期输入格式的描述
+	  - output_description: 预期输出格式的描述
+	- 输出参数:
+	  - is_success: 协商和代码生成是否成功
+	  - module_path: 生成代码的路径
+	- 调用函数:
+	  - ProtocolNegotiator()
+	  - self.negotiator.generate_initial_protocol()
+	  - self._create_protocol_negotiation_message()
+	  - self._send_message()
+	  - self._process_negotiation_messages()
+	  - ProtocolCodeGenerator()
+	  - code_generator.generate()
+5.MetaProtocol.wait_remote_negotiation()
+	- 功能描述: 等待远程协商并生成代码实现
+	- 输入参数: 无
+	- 输出参数:
+	  - is_success: 协商和代码生成是否成功
+	  - module_path: 生成代码的路径
+	- 调用函数:
+	  - ProtocolNegotiator()
+	  - self._process_negotiation_messages()
+	  - ProtocolCodeGenerator()
+	  - code_generator.generate()
+6.MetaProtocol.notify_code_generation()
+	- 功能描述: 通知代码生成已完成
+	- 输入参数: 无
+	- 输出参数: 无
+	- 调用函数:
+	  - self._create_code_generation_message()
+	  - self._send_message()
+	- MetaProtocol.wait_for_code_generation()
+
+	- 功能描述: 等待远程发送代码生成状态
+	- 输入参数: 无
+	- 输出参数: 代码生成是否成功
+	- 调用函数:
+	  - self.code_generation_messages_event.wait()
+7.MetaProtocol._handle_protocol_negotiation()
+	- 功能描述: 处理协议协商消息
+	- 输入参数: data: 协议协商消息数据
+	- 输出参数: 无
+	- 调用函数:
+	  - self.negotiation_messages_event.set()
+8.MetaProtocol._handle_code_generation()
+	- 功能描述: 处理代码生成状态消息
+	- 输入参数: data: 代码生成消息数据
+	- 输出参数: 无
+	- 调用函数:
+	  - self.code_generation_messages_event.set()
+9.MetaProtocol._process_negotiation_messages()
+	- 功能描述: 处理协议协商消息并处理协商流程
+	- 输入参数: 无
+	- 输出参数:
+	  - is_success: 协商是否成功
+	  - protocol: 协商成功的协议内容
+	- 调用函数:
+	  - self.negotiation_messages_event.wait()
+	  - self.negotiator.evaluate_protocol_proposal()
+	  - self._create_protocol_negotiation_message()
+	  - self._send_message()
+10.MetaProtocol._create_protocol_negotiation_message()
+	- 功能描述: 创建协议协商消息
+	- 输入参数:
+	  - sequence_id: 序列号
+	  - candidate_protocols: 候选协议
+	  - status: 协商状态
+	  - modification_summary: 修改摘要
+	- 输出参数: 协议协商消息
+	- 调用函数: 无
+11.MetaProtocol._create_code_generation_message()
+	- 功能描述: 创建代码生成消息
+	- 输入参数: success: 代码生成是否成功
+	- 输出参数: 代码生成消息
+	- 调用函数: 无
+12.MetaProtocol._send_message()
+	- 功能描述: 发送消息
+	- 输入参数: message: 要发送的消息
+	- 输出参数: 无
+	- 调用函数:
+	  - self.send_callback()
+13.MetaProtocol._handle_test_cases_negotiation()
+	- 功能描述: 处理测试用例协商消息
+	- 输入参数: data: 测试用例消息数据
+	- 输出参数: 无
+	- 调用函数: 无
+14.MetaProtocol._handle_fix_error_negotiation()
+	- 功能描述: 处理错误修复协商消息
+	- 输入参数: data: 错误修复消息数据
+	- 输出参数: 无
+	- 调用函数: 无
+15.MetaProtocol._handle_natural_language_negotiation()
+	- 功能描述: 处理自然语言协商消息
+	- 输入参数: data: 自然语言消息数据
+	- 输出参数: 无
+	- 调用函数: 无	
+	
+### []

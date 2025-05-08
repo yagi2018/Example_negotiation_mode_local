@@ -1,0 +1,370 @@
+(.venv) PS E:\ANP_PROJ> & e:/ANP_PROJ/.venv/Scripts/python311.exe E:\ANP_P
+tiation_mode\negotiation_bob.py
+?[92m2025-05-06 22:45:48,056 - INFO - log_base.py:47 - This is an info mes
+?[0m
+?[93m2025-05-06 22:45:48,056 - WARNING - log_base.py:48 - This is a warnin
+?[0m
+?[91m2025-05-06 22:45:48,056 - ERROR - log_base.py:49 - This is an error m
+?[0m
+?[95m2025-05-06 22:45:48,057 - CRITICAL - log_base.py:50 - This is a criti
+?[0m
+?[92m2025-05-06 22:45:49,747 - INFO - simple_node_v2.py:87 - Setting up We
+ at path: /ws
+?[0m
+Loading existing DID information from bob.json
+Loading existing DID information from bob.
+json
+Bob's DID: did:all:1JxNsuReTFmtAkhvSZxHxad
+JmjNoN9iNbj@localhost:5001
+?[32mINFO?[0m:     Started server process [?[36m93024?[0m]
+?[32mINFO?[0m:     Waiting for application startup.
+?[32mINFO?[0m:     Application startup complete.
+?[32mINFO?[0m:     Uvicorn running on ?[1mhttp://localhost:5001?[0m (Press
+ CTRL+C to quit)
+?[32mINFO?[0m:     ::1:62397 - "?[1mGET /v1/did/did%3Aall%3A1JxNsuReTFmtAk
+hvSZxHxadJmjNoN9iNbj%40localhost%3A5001 HTTP/1.1?[0m" ?[32m200 OK?[0m
+?[32mINFO?[0m:     ('::1', 62398) - "WebSocket /ws" [accepted]
+?[32mINFO?[0m:     connection open
+?[92m2025-05-06 22:46:19,354 - INFO - short_term_key_generater.py:269 - So
+urceHello message processed successfully
+?[0m
+?[92m2025-05-06 22:46:19,362 - INFO - short_term_key_generater.py:165 - re
+ceive_json_message[2209696965072], finished: {'version': '1.0', 'type': 'f
+inished', 'timestamp': '2025-05-06T14:46:19.361Z', 'messageId': '7e71d85be
+732df8c9d31fe427e15cbcc', 'sessionId': 'a512575b01aacf6dab24c5f6f3e38cd4',
+ 'sourceDid': 'did:all:1KmScMavA7r2GydX9cMDvxQskWy1gBBdgB@localhost:5000',
+ 'destinationDid': 'did:all:1JxNsuReTFmtAkhvSZxHxadJmjNoN9iNbj@localhost:5
+001', 'verifyData': {'iv': 'XxetJkAjLKB5SI2o', 'tag': 'dSvUsaJty441Apu2pIx
+/9g==', 'ciphertext': 'BQ6KFwIo44xP6d4O+/jfTCxIYEi691sdOQOP+B7LacjN3m8='}}
+
+?[0m
+?[92m2025-05-06 22:46:19,363 - INFO - short_term_key_generater.py:372 - Fi
+nished message processed successfully
+?[0m
+?[92m2025-05-06 22:46:19,364 - INFO - short_term_key_generater.py:461 - ge
+nerate_short_term_key_passive, success, secret_key_id: 217db13129ae9f08
+?[0m
+?[92m2025-05-06 22:46:19,366 - INFO - simple_node_session.py:137 - Key neg
+otiation message processing coroutine has been cancelled
+?[0m
+?[92m2025-05-06 22:46:19,366 - INFO - simple_negotion_node.py:69 - Started
+ message receiving task. remote did: did:all:1KmScMavA7r2GydX9cMDvxQskWy1g
+BBdgB@localhost:5000
+?[0m
+?[92m2025-05-06 22:46:19,367 - INFO - meta_protocol.py:218 - Starting prot
+ocol negotiation
+?[0m
+?[92m2025-05-06 22:46:40,659 - INFO - simple_node_session.py:357 - Message
+ decryption successful
+?[0m
+?[92m2025-05-06 22:46:40,659 - INFO - meta_protocol.py:116 - Meta Protocol
+ Received message: {'action': 'protocolNegotiation', 'sequenceId': 1, 'can
+didateProtocols': '```markdown\n# Requirements\n\nProvide an API interface
+ for retrieving user education history. The API should support:\n- Retriev
+ing education history for a single user.\n- Including detailed information
+ if requested.\n- Handling of errors and parameter validation.\n\n# Protoc
+ol Flow\n\n## Interaction Flow\n\n1. **Client** sends a request to retriev
+e the education history of a user.\n2. **Server** processes the request.\n
+3. **Server** responds with the education history and applicable paginatio
+n details or an error message.\n\n## Timeouts Handling\n\n- **Request Time
+out**: If the client does not receive a response within 30 seconds, it sho
+uld retry the request once.\n- **Server Timeout**: If the server takes lon
+ger than 30 seconds to process the request, it should respond with a 504 G
+ateway Timeout error.\n\n# Data Format\n\n## Request Message Format\n\nThe
+ request message should be in JSON format, adhering to the RFC8259 specifi
+cation.\n\n```json\n{\n  "messageType": "GetEducationHistory",\n  "message
+Id": "unique-id",\n  "userId": "string",\n  "includeDetails": "boolean"\n}
+\n```\n\n### JSON Schema\n\n```json\n{\n  "$schema": "http://json-schema.o
+rg/draft-2020-12/schema",\n  "type": "object",\n  "properties": {\n    "me
+ssageType": {\n      "type": "string",\n      "enum": ["GetEducationHistor
+y"],\n      "description": "Type of the message."\n    },\n    "messageId"
+: {\n      "type": "string",\n      "description": "Unique identifier for
+the message."\n    },\n    "userId": {\n      "type": "string",\n      "de
+scription": "Unique identifier for the user."\n    },\n    "includeDetails
+": {\n      "type": "boolean",\n      "description": "Whether to include d
+etailed information in the response."\n    }\n  },\n  "required": ["messag
+eType", "messageId", "userId"]\n}\n```\n\n## Response Message Format\n\nTh
+e response message should be in JSON format, adhering to the RFC8259 speci
+fication.\n\n```json\n{\n  "messageType": "GetEducationHistory",\n  "messa
+geId": "unique-id",\n  "code": 200,\n  "data": {\n    "educationHistory":
+[\n      {\n        "institution": "string",\n        "major": "string",\n
+        "degree": "string",\n        "achievements": "string",\n        "s
+tartDate": "YYYY-MM-DD",\n        "endDate": "YYYY-MM-DD"\n      }\n    ],
+\n    "meta": {\n      "page": 1,\n      "pageSize": 10,\n      "totalItem
+s": 50\n    }\n  }\n}\n```\n\n### JSON Schema\n\n```json\n{\n  "$schema":
+"http://json-schema.org/draft-2020-12/schema",\n  "type": "object",\n  "pr
+operties": {\n    "messageType": {\n      "type": "string",\n      "enum":
+ ["GetEducationHistory"],\n      "description": "Type of the message."\n
+  },\n    "messageId": {\n      "type": "string",\n      "description": "U
+nique identifier for the message."\n    },\n    "code": {\n      "type": "
+integer",\n      "description": "Status code indicating success or failure
+."\n    },\n    "data": {\n      "type": "object",\n      "properties": {\
+n        "educationHistory": {\n          "type": "array",\n          "ite
+ms": {\n            "type": "object",\n            "properties": {\n
+        "institution": {\n                "type": "string",\n
+   "description": "The name of the school."\n              },\n
+   "major": {\n                "type": "string",\n                "descrip
+tion": "The major studied."\n              },\n              "degree": {\n
+                "type": "string",\n                "enum": ["Bachelor", "M
+aster", "Doctorate"],\n                "description": "The degree attained
+."\n              },\n              "achievements": {\n                "ty
+pe": "string",\n                "description": "Achievements during the ed
+ucation."\n              },\n              "startDate": {\n
+ "type": "string",\n                "format": "date",\n                "de
+scription": "The start date of the education (YYYY-MM-DD)."\n
+ },\n              "endDate": {\n                "type": "string",\n
+          "format": "date",\n                "description": "The end date
+of the education (YYYY-MM-DD)."\n              }\n            },\n
+    "required": ["institution", "major", "degree", "startDate", "endDate"]
+\n          }\n        },\n        "meta": {\n          "type": "object",\
+n          "properties": {\n            "page": {\n              "type": "
+integer",\n              "description": "The current page number."\n
+      },\n            "pageSize": {\n              "type": "integer",\n
+           "description": "The number of items per page."\n            },\
+n            "totalItems": {\n              "type": "integer",\n
+    "description": "The total number of items."\n            }\n
+}\n        }\n      }\n    }\n  },\n  "required": ["messageType", "message
+Id", "code"]\n}\n```\n\n# Error Handling\n\n| Status Code | Description
+              | Error Message                |\n|-------------|-----------
+------------------|------------------------------|\n| 200         | OK
+                   | Successful retrieval        |\n| 400         | Bad Re
+quest                | Invalid input parameters     |\n| 404         | Not
+ Found                  | User not found               |\n| 500         |
+Internal Server Error      | Server error                 |\n| 503
+ | Service Unavailable        | Service temporarily unavailable         |\
+n| 1000        | Invalid User ID            | User ID is invalid
+ |\n| 1001        | Detailed Info Unavailable  | Detail information is una
+vailable   |\n\nAny error response should follow the same JSON structure a
+s the success response but include an `error` field instead of `data`.\n\n
+### Error Response Format\n\n```json\n{\n  "messageType": "GetEducationHis
+tory",\n  "messageId": "unique-id",\n  "code": 400,\n  "error": {\n    "me
+ssage": "Invalid input parameters",\n    "details": "userId is required."\
+n  }\n}\n```\n\n### JSON Schema for Error Response\n\n```json\n{\n  "$sche
+ma": "http://json-schema.org/draft-2020-12/schema",\n  "type": "object",\n
+  "properties": {\n    "messageType": {\n      "type": "string",\n      "e
+num": ["GetEducationHistory"],\n      "description": "Type of the message.
+"\n    },\n    "messageId": {\n      "type": "string",\n      "description
+": "Unique identifier for the message."\n    },\n    "code": {\n      "typ
+e": "integer",\n      "description": "Status code indicating success or fa
+ilure."\n    },\n    "error": {\n      "type": "object",\n      "propertie
+s": {\n        "message": {\n          "type": "string",\n          "descr
+iption": "Error message."\n        },\n        "details": {\n          "ty
+pe": "string",\n          "description": "Detailed error description."\n
+      }\n      }\n    }\n  },\n  "required": ["messageType", "messageId",
+"code", "error"]\n}\n```', 'status': 'negotiating'}
+?[0m
+?[92m2025-05-06 22:46:40,663 - INFO - meta_protocol.py:358 - Start process
+ing negotiation messages
+?[0m
+?[92m2025-05-06 22:46:40,663 - INFO - meta_protocol.py:361 - Processing ne
+gotiation message: {'action': 'protocolNegotiation', 'sequenceId': 1, 'can
+didateProtocols': '```markdown\n# Requirements\n\nProvide an API interface
+ for retrieving user education history. The API should support:\n- Retriev
+ing education history for a single user.\n- Including detailed information
+ if requested.\n- Handling of errors and parameter validation.\n\n# Protoc
+ol Flow\n\n## Interaction Flow\n\n1. **Client** sends a request to retriev
+e the education history of a user.\n2. **Server** processes the request.\n
+3. **Server** responds with the education history and applicable paginatio
+n details or an error message.\n\n## Timeouts Handling\n\n- **Request Time
+out**: If the client does not receive a response within 30 seconds, it sho
+uld retry the request once.\n- **Server Timeout**: If the server takes lon
+ger than 30 seconds to process the request, it should respond with a 504 G
+ateway Timeout error.\n\n# Data Format\n\n## Request Message Format\n\nThe
+ request message should be in JSON format, adhering to the RFC8259 specifi
+cation.\n\n```json\n{\n  "messageType": "GetEducationHistory",\n  "message
+Id": "unique-id",\n  "userId": "string",\n  "includeDetails": "boolean"\n}
+\n```\n\n### JSON Schema\n\n```json\n{\n  "$schema": "http://json-schema.o
+rg/draft-2020-12/schema",\n  "type": "object",\n  "properties": {\n    "me
+ssageType": {\n      "type": "string",\n      "enum": ["GetEducationHistor
+y"],\n      "description": "Type of the message."\n    },\n    "messageId"
+: {\n      "type": "string",\n      "description": "Unique identifier for
+the message."\n    },\n    "userId": {\n      "type": "string",\n      "de
+scription": "Unique identifier for the user."\n    },\n    "includeDetails
+": {\n      "type": "boolean",\n      "description": "Whether to include d
+etailed information in the response."\n    }\n  },\n  "required": ["messag
+eType", "messageId", "userId"]\n}\n```\n\n## Response Message Format\n\nTh
+e response message should be in JSON format, adhering to the RFC8259 speci
+fication.\n\n```json\n{\n  "messageType": "GetEducationHistory",\n  "messa
+geId": "unique-id",\n  "code": 200,\n  "data": {\n    "educationHistory":
+[\n      {\n        "institution": "string",\n        "major": "string",\n
+        "degree": "string",\n        "achievements": "string",\n        "s
+tartDate": "YYYY-MM-DD",\n        "endDate": "YYYY-MM-DD"\n      }\n    ],
+\n    "meta": {\n      "page": 1,\n      "pageSize": 10,\n      "totalItem
+s": 50\n    }\n  }\n}\n```\n\n### JSON Schema\n\n```json\n{\n  "$schema":
+"http://json-schema.org/draft-2020-12/schema",\n  "type": "object",\n  "pr
+operties": {\n    "messageType": {\n      "type": "string",\n      "enum":
+ ["GetEducationHistory"],\n      "description": "Type of the message."\n
+  },\n    "messageId": {\n      "type": "string",\n      "description": "U
+nique identifier for the message."\n    },\n    "code": {\n      "type": "
+integer",\n      "description": "Status code indicating success or failure
+."\n    },\n    "data": {\n      "type": "object",\n      "properties": {\
+n        "educationHistory": {\n          "type": "array",\n          "ite
+ms": {\n            "type": "object",\n            "properties": {\n
+        "institution": {\n                "type": "string",\n
+   "description": "The name of the school."\n              },\n
+   "major": {\n                "type": "string",\n                "descrip
+tion": "The major studied."\n              },\n              "degree": {\n
+                "type": "string",\n                "enum": ["Bachelor", "M
+aster", "Doctorate"],\n                "description": "The degree attained
+."\n              },\n              "achievements": {\n                "ty
+pe": "string",\n                "description": "Achievements during the ed
+ucation."\n              },\n              "startDate": {\n
+ "type": "string",\n                "format": "date",\n                "de
+scription": "The start date of the education (YYYY-MM-DD)."\n
+ },\n              "endDate": {\n                "type": "string",\n
+          "format": "date",\n                "description": "The end date
+of the education (YYYY-MM-DD)."\n              }\n            },\n
+    "required": ["institution", "major", "degree", "startDate", "endDate"]
+\n          }\n        },\n        "meta": {\n          "type": "object",\
+n          "properties": {\n            "page": {\n              "type": "
+integer",\n              "description": "The current page number."\n
+      },\n            "pageSize": {\n              "type": "integer",\n
+           "description": "The number of items per page."\n            },\
+n            "totalItems": {\n              "type": "integer",\n
+    "description": "The total number of items."\n            }\n
+}\n        }\n      }\n    }\n  },\n  "required": ["messageType", "message
+Id", "code"]\n}\n```\n\n# Error Handling\n\n| Status Code | Description
+              | Error Message                |\n|-------------|-----------
+------------------|------------------------------|\n| 200         | OK
+                   | Successful retrieval        |\n| 400         | Bad Re
+quest                | Invalid input parameters     |\n| 404         | Not
+ Found                  | User not found               |\n| 500         |
+Internal Server Error      | Server error                 |\n| 503
+ | Service Unavailable        | Service temporarily unavailable         |\
+n| 1000        | Invalid User ID            | User ID is invalid
+ |\n| 1001        | Detailed Info Unavailable  | Detail information is una
+vailable   |\n\nAny error response should follow the same JSON structure a
+s the success response but include an `error` field instead of `data`.\n\n
+### Error Response Format\n\n```json\n{\n  "messageType": "GetEducationHis
+tory",\n  "messageId": "unique-id",\n  "code": 400,\n  "error": {\n    "me
+ssage": "Invalid input parameters",\n    "details": "userId is required."\
+n  }\n}\n```\n\n### JSON Schema for Error Response\n\n```json\n{\n  "$sche
+ma": "http://json-schema.org/draft-2020-12/schema",\n  "type": "object",\n
+  "properties": {\n    "messageType": {\n      "type": "string",\n      "e
+num": ["GetEducationHistory"],\n      "description": "Type of the message.
+"\n    },\n    "messageId": {\n      "type": "string",\n      "description
+": "Unique identifier for the message."\n    },\n    "code": {\n      "typ
+e": "integer",\n      "description": "Status code indicating success or fa
+ilure."\n    },\n    "error": {\n      "type": "object",\n      "propertie
+s": {\n        "message": {\n          "type": "string",\n          "descr
+iption": "Error message."\n        },\n        "details": {\n          "ty
+pe": "string",\n          "description": "Detailed error description."\n
+      }\n      }\n    }\n  },\n  "required": ["messageType", "messageId",
+"code", "error"]\n}\n```', 'status': 'negotiating'}
+?[0m
+?[92m2025-05-06 22:46:40,664 - INFO - protocol_negotiator.py:392 - Startin
+g protocol proposal evaluation: status=NEGOTIATING, round=1
+?[0m
+?[92m2025-05-06 22:46:40,664 - INFO - protocol_negotiator.py:441 - Startin
+g provider-side protocol evaluation...
+?[0m
+?[92m2025-05-06 22:46:41,419 - INFO - _client.py:1740 - HTTP Request: POST
+ https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+?[0m
+?[92m2025-05-06 22:46:44,326 - INFO - protocol_negotiator.py:523 - Calling
+ capability info check tool...
+?[0m
+?[92m2025-05-06 22:46:44,327 - INFO - negotiation_bob.py:30 - Requirement:
+
+Provide an API interface for retrieving user education history. The API sh
+ould support: - Retrieving education history for a single user. -  Includi
+ng detailed information if requested. - Handling of errors and parameter v
+alidation.
+?[0m
+?[92m2025-05-06 22:46:44,327 - INFO - negotiation_bob.py:31 - Input descri
+ption: REST API interface to receive request including userId, page Number
+ and includeDetails flag
+?[0m
+?[92m2025-05-06 22:46:44,328 - INFO - negotiation_bob.py:32 - Output descr
+iption: Response request including educationHistory and paginationDetail
+?[0m
+?[92m2025-05-06 22:46:44,602 - INFO - _client.py:1740 - HTTP Request: POST
+ https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+?[0m
+?[92m2025-05-06 22:46:47,711 - INFO - protocol_negotiator.py:517 - LLM eva
+luation completed, no tool calls needed
+?[0m
+?[91m2025-05-06 22:46:47,712 - ERROR - protocol_negotiator.py:564 - Failed
+ to evaluate protocol: Received empty response from LLM
+Stack trace:
+Traceback (most recent call last):
+  File "E:\ANP_PROJ\Example_negotiation_mode\meta_protocol\protocol_negoti
+ator.py", line 542, in _evaluate_as_provider
+    raise ValueError("Received empty response from LLM")
+ValueError: Received empty response from LLM
+
+?[0m
+?[92m2025-05-06 22:46:47,713 - INFO - meta_protocol.py:424 - Meta Protocol
+ Sending message[protocol_type=ProtocolType.META]: {'action': 'protocolNeg
+otiation', 'sequenceId': 2, 'candidateProtocols': '', 'status': 'rejected'
+, 'modificationSummary': 'Error during evaluation: Received empty response
+ from LLM'}
+?[0m
+?[92m2025-05-06 22:46:47,713 - INFO - simple_node_session.py:391 - Success
+fully sent message to did:all:1KmScMavA7r2GydX9cMDvxQskWy1gBBdgB@localhost
+:5000
+?[0m
+?[91m2025-05-06 22:46:47,714 - ERROR - app_protocols.py:106 - meta_data.js
+on not found:
+?[0m
+?[91m2025-05-06 22:46:47,716 - ERROR - simple_node_v2.py:259 - Error recei
+ving message:
+Traceback (most recent call last):
+  File "E:\ANP_PROJ\Example_negotiation_mode\simple_node\simple_node_v2.py
+", line 251, in _new_wss_server_session
+    await self.ws_new_session_callback(simple_session)
+  File "E:\ANP_PROJ\Example_negotiation_mode\simple_node\simple_negotion_n
+ode.py", line 193, in _new_session_callback
+    provider_instance: ProviderBase = provider_class()
+                                      ^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not callable
+
+?[0m
+?[92m2025-05-06 22:46:47,716 - INFO - simple_node_v2.py:262 - Closing sess
+ion with DID: did:all:1KmScMavA7r2GydX9cMDvxQskWy1gBBdgB@localhost:5000
+?[0m
+?[92m2025-05-06 22:46:47,719 - INFO - simple_node_session.py:357 - Message
+ decryption successful
+?[0m
+?[92m2025-05-06 22:46:47,719 - INFO - meta_protocol.py:116 - Meta Protocol
+ Received message: {'action': 'protocolNegotiation', 'sequenceId': 1, 'can
+didateProtocols': '', 'status': 'rejected'}
+?[0m
+?[91m2025-05-06 22:46:47,723 - ERROR - simple_negotion_node.py:63 - Receiv
+e message task exception: WebSocket is not connected. Need to call "accept
+" first., remote did: did:all:1KmScMavA7r2GydX9cMDvxQskWy1gBBdgB@localhost
+:5000
+Stack trace:
+Traceback (most recent call last):
+  File "E:\ANP_PROJ\Example_negotiation_mode\simple_node\simple_negotion_n
+ode.py", line 48, in receive_message_task
+    message = await self.simple_session.receive_message()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ANP_PROJ\Example_negotiation_mode\simple_node\simple_node_sessi
+on.py", line 317, in receive_message
+    json_data = await self.wss_wraper.receive_data()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\ANP_PROJ\Example_negotiation_mode\simple_node\simple_wss_wraper
+.py", line 53, in receive_data
+    data = await asyncio.wait_for(self.websocket.receive_text(), timeout=t
+imeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\tasks.py", line 489, in wai
+t_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "E:\ANP_PROJ\.venv\Lib\site-packages\starlette\websockets.py", line
+ 117, in receive_text
+    raise RuntimeError('WebSocket is not connected. Need to call "accept"
+first.')
+RuntimeError: WebSocket is not connected. Need to call "accept" first.
+
+?[0m
+?[92m2025-05-06 22:46:57,715 - INFO - simple_wss_wraper.py:71 - WebSocket c
+onnection closed
+?[0m
+?[92m2025-05-06 22:46:57,716 - INFO - simple_node_session.py:83 - SimpleNod
+eSession has been closed
+?[0m
+?[32mINFO?[0m:     connection closed
